@@ -1,8 +1,7 @@
 locals {
-  is_windows = substr(pathexpand("~"), 0, 1) == "/" ? false : true
-
-  # TODO: I NEED TO PULL THESE OVER
-  script_hash = filemd5(local.is_windows ? "./scripts/pull-converter-image.ps1" : "./scripts/pull-converter-image.sh")
+  is_windows  = substr(pathexpand("~"), 0, 1) == "/" ? false : true
+  script_file = local.is_windows ? "${path.module}/scripts/pull-converter-image.ps1" : "${path.module}/scripts/pull-converter-image.sh"
+  script_hash = filemd5(local.script_file)
 }
 
 # ECR repository is required as the lambda cannot use an image from a public ECR
@@ -21,7 +20,7 @@ resource "aws_ecr_repository" "docbox_ecr_private" {
 # and into our private ECR
 resource "null_resource" "trigger_cache_pull" {
   provisioner "local-exec" {
-    command = templatefile(local.is_windows ? "./scripts/pull-converter-image.ps1" : "./scripts/pull-converter-image.sh", {
+    command = templatefile(local.script_file, {
       aws_region  = var.aws_region
       aws_profile = var.aws_profile
 

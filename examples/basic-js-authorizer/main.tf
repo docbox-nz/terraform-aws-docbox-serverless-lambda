@@ -44,7 +44,7 @@ module "authorizer_lambda" {
 
 # Base docbox infra
 module "serverless_docbox" {
-  source       = "../modules/serverless_docbox"
+  source       = "../../"
   aws_profile  = var.aws_profile
   aws_region   = var.aws_region
   architecture = var.architecture
@@ -83,7 +83,7 @@ resource "aws_secretsmanager_secret_version" "config_secret_version" {
   secret_id = aws_secretsmanager_secret.config_secret.id
   secret_string = jsonencode({
     api = {
-      url = module.serverless_docbox_api.api_endpoint
+      url = module.serverless_docbox.api_endpoint
     }
     database = {
       host                   = aws_db_instance.postgres.address

@@ -126,22 +126,28 @@ variable "local_http_lambda_zip_path" {
   description = "Path to a local lambda zip file for the http lambda to override the lambda"
   type        = string
   nullable    = true
+  default     = null
 }
 
 variable "local_cleanup_lambda_zip_path" {
   description = "Path to a local lambda zip file for the cleanup lambda to override the lambda"
   type        = string
   nullable    = true
+  default     = null
+
 }
 
 variable "local_management_lambda_zip_path" {
   description = "Path to a local lambda zip file for the management lambda to override the lambda"
   type        = string
   nullable    = true
+  default     = null
+
 }
 
 variable "local_upload_completion_lambda_zip_path" {
   description = "Path to a local lambda zip file for the upload completion lambda to override the lambda"
   type        = string
   nullable    = true
+  default     = null
 }

@@ -15,7 +15,7 @@ module "management_lambda" {
   architecture           = var.architecture
   source                 = "./modules/zip_lambda"
   function_name          = var.management_lambda_function_name
-  zip_source             = try(var.local_management_lambda_zip_path, local.management_lambda_download_url)
+  zip_source             = var.local_management_lambda_zip_path != null ? var.local_management_lambda_zip_path : local.management_lambda_download_url
   timeout                = var.management_lambda_timeout
   memory_size            = var.management_lambda_memory_size
   environment_variables  = local.management_lambda_environment_variables

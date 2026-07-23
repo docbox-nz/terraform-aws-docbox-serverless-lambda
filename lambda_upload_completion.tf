@@ -21,7 +21,7 @@ module "office_converter_lambda" {
   aws_profile  = var.aws_profile
   aws_region   = var.aws_region
   architecture = var.architecture
-  source       = "../office_converter_lambda"
+  source       = "./modules/office_converter_lambda"
 }
 
 # Lambda for handling file processing on upload completion
@@ -29,7 +29,7 @@ module "upload_completion_lambda" {
   architecture           = var.architecture
   source                 = "./modules/zip_lambda"
   function_name          = var.upload_completion_lambda_function_name
-  zip_source             = try(var.local_upload_completion_lambda_zip_path, local.upload_completion_lambda_download_url)
+  zip_source             = var.local_upload_completion_lambda_zip_path != null ? var.local_upload_completion_lambda_zip_path : local.upload_completion_lambda_download_url
   timeout                = var.upload_completion_lambda_timeout
   memory_size            = var.upload_completion_lambda_memory_size
   environment_variables  = local.upload_completion_lambda_environment_variables

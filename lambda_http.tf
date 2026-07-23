@@ -15,7 +15,7 @@ locals {
 module "http_lambda" {
   architecture           = var.architecture
   source                 = "./modules/zip_lambda"
-  zip_source             = try(var.local_http_lambda_zip_path, local.http_lambda_download_url)
+  zip_source             = var.local_http_lambda_zip_path != null ? var.local_http_lambda_zip_path : local.http_lambda_download_url
   function_name          = var.http_lambda_function_name
   timeout                = var.http_lambda_timeout
   memory_size            = var.http_lambda_memory_size

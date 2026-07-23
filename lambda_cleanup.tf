@@ -13,7 +13,7 @@ module "presigned_cleanup_lambda" {
   architecture           = var.architecture
   source                 = "./modules/zip_lambda"
   function_name          = var.cleanup_lambda_function_name
-  zip_source             = try(var.local_cleanup_lambda_zip_path, local.cleanup_lambda_download_url)
+  zip_source             = var.local_cleanup_lambda_zip_path != null ? var.local_cleanup_lambda_zip_path : local.cleanup_lambda_download_url
   timeout                = var.cleanup_lambda_timeout
   memory_size            = var.cleanup_lambda_memory_size
   environment_variables  = local.cleanup_lambda_environment_variables

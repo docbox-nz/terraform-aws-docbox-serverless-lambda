@@ -51,7 +51,7 @@ module "serverless_docbox" {
 
   # Base environment variables for all the lambdas
   environment_variables = {
-    RUST_LOG                    = "debug",
+    RUST_LOG                    = "debug,docbox_core::notifications::sqs=info"
     DOCBOX_DB_HOST              = aws_db_instance.postgres.address
     DOCBOX_DB_PORT              = tostring(aws_db_instance.postgres.port)
     DOCBOX_DB_ROOT_IAM          = "true"

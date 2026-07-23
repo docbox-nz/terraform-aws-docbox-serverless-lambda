@@ -151,3 +151,15 @@ variable "local_upload_completion_lambda_zip_path" {
   nullable    = true
   default     = null
 }
+
+variable "authorizer_identity_source" {
+  description = "identity_source to pass to the aws_api_gateway_authorizer"
+  type        = string
+  default     = "method.request.header.Authorization, context.path, context.httpMethod"
+}
+
+variable "authorizer_result_ttl_in_seconds" {
+  description = "Time in seconds to cache the authorizer result for"
+  type        = number
+  default     = 30
+}

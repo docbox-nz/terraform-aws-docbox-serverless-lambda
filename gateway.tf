@@ -20,9 +20,11 @@ resource "aws_api_gateway_authorizer" "auth" {
   name           = "docbox-authorizer"
   rest_api_id    = aws_api_gateway_rest_api.rest_api.id
   authorizer_uri = var.authorizer_lambda_invoke_arn
-  type           = "TOKEN"
-}
+  type           = "REQUEST"
 
+  identity_source                  = var.authorizer_identity_source
+  authorizer_result_ttl_in_seconds = var.authorizer_result_ttl_in_seconds
+}
 
 resource "aws_lambda_permission" "apigw_authorizer" {
   statement_id  = "AllowExecutionFromAPIGatewayAuth"

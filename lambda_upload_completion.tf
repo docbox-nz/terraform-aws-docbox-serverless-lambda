@@ -18,10 +18,19 @@ locals {
 
 # Lambda for performing office file conversion
 module "office_converter_lambda" {
+  source  = "jacobtread/office-convert-lambda/aws"
+  version = "0.1.0"
+
+  lambda_function_name      = "docbox-office-convert-lambda"
+  lambda_role_name          = "docbox-office-convert-lambda-role"
+  bucket_access_policy_name = "docbox-office-convert-bucket-access"
+  temporary_bucket_name     = "docbox-office-convert-tmp"
+  invoke_iam_policy_name    = "docbox-office-convert-invoke"
+  ecr_repository_name       = "docbox-office-convert"
+
   aws_profile  = var.aws_profile
   aws_region   = var.aws_region
   architecture = var.architecture
-  source       = "./modules/office_converter_lambda"
 }
 
 # Lambda for handling file processing on upload completion

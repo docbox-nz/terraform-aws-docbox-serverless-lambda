@@ -12,8 +12,10 @@ locals {
 # Lambda for management of the serverless docbox setup
 # (Since in most cases its not going to be easy to access the database and other resources directly)
 module "management_lambda" {
+  source  = "jacobtread/simple-zip-lambda/aws"
+  version = "0.1.0"
+
   architecture           = var.architecture
-  source                 = "./modules/zip_lambda"
   function_name          = var.management_lambda_function_name
   zip_source             = var.local_management_lambda_zip_path != null ? var.local_management_lambda_zip_path : local.management_lambda_download_url
   timeout                = var.management_lambda_timeout

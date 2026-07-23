@@ -32,8 +32,10 @@ data "archive_file" "authorizer_zip" {
 
 # Lambda for docbox HTTP API
 module "authorizer_lambda" {
+  source  = "jacobtread/simple-zip-lambda/aws"
+  version = "0.1.0"
+
   architecture  = var.architecture
-  source        = "../../modules/zip_lambda"
   zip_source    = data.archive_file.authorizer_zip.output_path
   function_name = "docbox-authorizer-lambda"
   timeout       = 60

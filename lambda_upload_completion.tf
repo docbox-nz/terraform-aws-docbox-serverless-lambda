@@ -35,8 +35,10 @@ module "office_converter_lambda" {
 
 # Lambda for handling file processing on upload completion
 module "upload_completion_lambda" {
+  source  = "jacobtread/simple-zip-lambda/aws"
+  version = "0.1.0"
+
   architecture           = var.architecture
-  source                 = "./modules/zip_lambda"
   function_name          = var.upload_completion_lambda_function_name
   zip_source             = var.local_upload_completion_lambda_zip_path != null ? var.local_upload_completion_lambda_zip_path : local.upload_completion_lambda_download_url
   timeout                = var.upload_completion_lambda_timeout

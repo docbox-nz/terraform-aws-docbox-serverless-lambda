@@ -13,8 +13,10 @@ locals {
 
 # Lambda for docbox HTTP API
 module "http_lambda" {
+  source  = "jacobtread/simple-zip-lambda/aws"
+  version = "0.1.0"
+
   architecture           = var.architecture
-  source                 = "./modules/zip_lambda"
   zip_source             = var.local_http_lambda_zip_path != null ? var.local_http_lambda_zip_path : local.http_lambda_download_url
   function_name          = var.http_lambda_function_name
   timeout                = var.http_lambda_timeout

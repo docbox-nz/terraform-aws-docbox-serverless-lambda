@@ -10,8 +10,10 @@ locals {
 
 # Lambda for the automated presigned database&s3 cleanup task
 module "presigned_cleanup_lambda" {
+  source  = "jacobtread/simple-zip-lambda/aws"
+  version = "0.1.0"
+
   architecture           = var.architecture
-  source                 = "./modules/zip_lambda"
   function_name          = var.cleanup_lambda_function_name
   zip_source             = var.local_cleanup_lambda_zip_path != null ? var.local_cleanup_lambda_zip_path : local.cleanup_lambda_download_url
   timeout                = var.cleanup_lambda_timeout

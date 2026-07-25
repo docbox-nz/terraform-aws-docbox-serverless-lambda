@@ -46,7 +46,9 @@ module "authorizer_lambda" {
 
 # Base docbox infra
 module "serverless_docbox" {
-  source       = "../../"
+  source  = "docbox-nz/docbox-serverless-lambda/aws"
+  version = "0.0.3"
+
   aws_profile  = var.aws_profile
   aws_region   = var.aws_region
   architecture = var.architecture

@@ -19,7 +19,7 @@ locals {
 # Lambda for performing office file conversion
 module "office_converter_lambda" {
   source  = "jacobtread/office-convert-lambda/aws"
-  version = "0.1.0"
+  version = "0.1.1"
 
   lambda_function_name      = "docbox-office-convert-lambda"
   lambda_role_name          = "docbox-office-convert-lambda-role"

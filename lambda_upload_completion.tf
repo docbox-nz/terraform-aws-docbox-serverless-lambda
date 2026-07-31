@@ -14,6 +14,9 @@ locals {
     module.office_converter_lambda.invoke_policy_arn
   ])
   upload_completion_lambda_download_url = "${local.serverless_base_url}/docbox-upload-completion-lambda-${local.serverless_zip_arch}.zip"
+
+  poppler_layer_download_url = "${local.serverless_base_url}/poppler-lambda-layer-${local.serverless_zip_arch}.zip"
+  poppler_layer_file_path    = "${path.module}/poppler-layer-${local.serverless_zip_arch}.zip"
 }
 
 # Lambda for performing office file conversion
@@ -33,10 +36,26 @@ module "office_converter_lambda" {
   architecture = var.architecture
 }
 
+# Layer for providing the poppler dependency
+data "http" "poppler_layer_zip" {
+  url = local.poppler_layer_download_url
+}
+
+resource "local_sensitive_file" "downloaded_zip" {
+  content_base64 = data.http.poppler_layer_zip[0].response_body_base64
+  filename       = local.poppler_layer_file_path
+}
+
+resource "aws_lambda_layer_version" "poppler_layer" {
+  layer_name          = "docbox-poppler-layer"
+  filename            = local_sensitive_file.downloaded_zip.filename
+  compatible_runtimes = ["provided.al2023"]
+}
+
 # Lambda for handling file processing on upload completion
 module "upload_completion_lambda" {
   source  = "jacobtread/simple-zip-lambda/aws"
-  version = "0.1.0"
+  version = "0.2.0"
 
   architecture           = var.architecture
   function_name          = var.upload_completion_lambda_function_name
@@ -45,6 +64,8 @@ module "upload_completion_lambda" {
   memory_size            = var.upload_completion_lambda_memory_size
   environment_variables  = local.upload_completion_lambda_environment_variables
   additional_policy_arns = local.upload_completion_lambda_policies
+
+  layers = [aws_lambda_layer_version.poppler_layer.arn]
 }
 
 # Queue for file upload messages

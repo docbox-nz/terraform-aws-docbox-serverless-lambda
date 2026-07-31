@@ -11,7 +11,7 @@ locals {
 # Lambda for the automated presigned database&s3 cleanup task
 module "presigned_cleanup_lambda" {
   source  = "jacobtread/simple-zip-lambda/aws"
-  version = "0.1.0"
+  version = "0.2.0"
 
   architecture           = var.architecture
   function_name          = var.cleanup_lambda_function_name

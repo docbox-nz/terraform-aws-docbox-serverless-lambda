@@ -14,7 +14,7 @@ locals {
 # Lambda for docbox HTTP API
 module "http_lambda" {
   source  = "jacobtread/simple-zip-lambda/aws"
-  version = "0.1.0"
+  version = "0.2.0"
 
   architecture           = var.architecture
   zip_source             = var.local_http_lambda_zip_path != null ? var.local_http_lambda_zip_path : local.http_lambda_download_url

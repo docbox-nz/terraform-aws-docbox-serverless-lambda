@@ -42,7 +42,7 @@ data "http" "poppler_layer_zip" {
 }
 
 resource "local_sensitive_file" "downloaded_zip" {
-  content_base64 = data.http.poppler_layer_zip[0].response_body_base64
+  content_base64 = data.http.poppler_layer_zip.response_body_base64
   filename       = local.poppler_layer_file_path
 }
 

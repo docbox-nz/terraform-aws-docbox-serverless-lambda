@@ -9,7 +9,7 @@ locals {
     # lambda based on S3 events
     "arn:aws:iam::aws:policy/service-role/AWSLambdaSQSQueueExecutionRole",
     # Provide access the office converter temporary S3 bucket
-    module.office_converter_lambda.s3_access_policy_arn,
+    module.office_converter_lambda.bucket_access_policy_arn,
     # Provide invoke access to the office converter lambda
     module.office_converter_lambda.invoke_policy_arn
   ])

@@ -41,14 +41,14 @@ data "http" "poppler_layer_zip" {
   url = local.poppler_layer_download_url
 }
 
-resource "local_sensitive_file" "downloaded_zip" {
+resource "local_sensitive_file" "poppler_layer_zip" {
   content_base64 = data.http.poppler_layer_zip.response_body_base64
   filename       = local.poppler_layer_file_path
 }
 
 resource "aws_lambda_layer_version" "poppler_layer" {
   layer_name          = "docbox-poppler-layer"
-  filename            = local_sensitive_file.downloaded_zip.filename
+  filename            = local_sensitive_file.poppler_layer_zip.filename
   compatible_runtimes = ["provided.al2023"]
 }
 

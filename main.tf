@@ -12,7 +12,7 @@ terraform {
 
 locals {
   serverless_repo              = "docbox-nz/docbox-serverless-lambda"
-  serverless_version           = "0.0.3"
+  serverless_version           = "0.0.4"
   serverless_base_url          = "https://github.com/${local.serverless_repo}/releases/download/${local.serverless_version}"
   serverless_zip_arch          = var.architecture == "x86_64" ? "amd64" : "arm64"
   shared_environment_variables = var.environment_variables
